@@ -1,0 +1,14 @@
+apiVersion: api.practice.com/v1alpha1
+kind: Podrestarter
+metadata:
+  name: mypodrestarter
+spec:
+  restart: false
+  deployment_name: xxxxx
+  replicas: 2
+  images:
+    - image: xxxx
+    - image: xxxxx
+
+
+
