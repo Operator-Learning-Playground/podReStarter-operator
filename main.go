@@ -48,7 +48,7 @@ func main() {
 	podReStarterCtl := controller.NewPodReStarterController()
 
 	err = builder.ControllerManagedBy(mgr).
-		For(&podrestarterv1alpha1.PodReStarter{}).
+		For(&podrestarterv1alpha1.Podrestarter{}).
 		Complete(podReStarterCtl)
 
 

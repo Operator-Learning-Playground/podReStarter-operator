@@ -3,12 +3,13 @@ kind: Podrestarter
 metadata:
   name: mypodrestarter
 spec:
-  restart: false
-  deployment_name: xxxxx
+  restart: "false"
+  deployment_name: my-deployment
+  deployment_namespace: default
   replicas: 2
   images:
-    - image: xxxx
-    - image: xxxxx
+    - image: nginx:1.18-alpine
+    - image: busybox
 
 
 

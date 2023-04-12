@@ -29,5 +29,5 @@ spec:
     listKind: PodrestarterList
     # kind的简称，就像service的简称是svc
     shortNames:
-      - pr
+      - ps
   scope: Namespaced

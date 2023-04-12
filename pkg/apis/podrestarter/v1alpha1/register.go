@@ -32,8 +32,8 @@ var (
 func addKnownTypes(scheme *runtime.Scheme) error {
 
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&PodReStarter{},
-		&PodReStarterList{},
+		&Podrestarter{},
+		&PodrestarterList{},
 	)
 	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
 	return nil

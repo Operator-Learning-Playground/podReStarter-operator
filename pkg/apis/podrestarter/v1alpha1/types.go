@@ -7,8 +7,8 @@ import (
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// PodReStarter
-type PodReStarter struct {
+// Podrestarter
+type Podrestarter struct {
 	metav1.TypeMeta `json:",inline"`
 
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -18,10 +18,11 @@ type PodReStarter struct {
 
 
 type PodReStarterSpec struct {
-	Restart  		string	`json:"restart"`
-	DeploymentName 	string	`json:"deployment_name"`
-	Replicas		int		`json:"replicas"`
-	Images          []Image	`json:"images"`
+	Restart  			 string	 `json:"restart"`
+	DeploymentName 		 string	 `json:"deployment_name"`
+	DeploymentNamespace  string  `json:"deployment_namespace"`
+    Replicas			 int	 `json:"replicas"`
+	Images          	 []Image `json:"images"`
 }
 
 type Image struct {
@@ -32,12 +33,12 @@ type Image struct {
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // PodReStarterList
-type PodReStarterList struct {
+type PodrestarterList struct {
 	metav1.TypeMeta `json:",inline"`
 	// +optional
 	metav1.ListMeta `json:"metadata,omitempty"`
 
-	Items []PodReStarter `json:"items"`
+	Items []Podrestarter `json:"items"`
 }
 
 

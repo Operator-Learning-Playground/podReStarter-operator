@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: mymessage-sa
+  name: mypodrestarter-sa
   namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: mymessage-clusterrole
+  name: mypodrestarter-clusterrole
 rules:
   - apiGroups:
       - ""
@@ -26,6 +26,7 @@ rules:
       - get
       - list
       - watch
+      - patch
   - apiGroups:
       - ""
     resources:
@@ -80,7 +81,7 @@ rules:
   - apiGroups:
       - api.practice.com
     resources:
-      - messages
+      - podrestarter
     verbs:
       - create
       - delete
@@ -92,13 +93,13 @@ rules:
   - apiGroups:
       - api.practice.com
     resources:
-      - messages/finalizers
+      - podrestarter/finalizers
     verbs:
       - update
   - apiGroups:
       - api.practice.com
     resources:
-      - messages/status
+      - podrestarter/status
     verbs:
       - get
       - patch
@@ -107,12 +108,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: mymessage-ClusterRoleBinding
+  name: mypodrestarter-ClusterRoleBinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: mymessage-clusterrole
+  name: mypodrestarter-clusterrole
 subjects:
   - kind: ServiceAccount
-    name: mymessage-sa
+    name: mypodrestarter-sa
     namespace: default
