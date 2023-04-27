@@ -1,7 +1,6 @@
 package v1alpha1
 
 import (
-	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -23,7 +22,6 @@ type PodReStarterSpec struct {
 	DeploymentNamespace string         `json:"deployment_namespace"`
 	Replicas            int            `json:"replicas"`
 	Images              []Image        `json:"images"`
-	Containers          []v1.Container `json:"containers"`
 }
 
 type Image struct {
