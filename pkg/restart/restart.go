@@ -26,7 +26,6 @@ func RestartPodByImage(pod *v1.Pod, clientSet kubernetes.Interface) {
 	patch := fmt.Sprintf(`[{"op": "replace", "path": "/spec/containers/0/image", "value": "%v"}]`, randomImage)
 	patchBytes := []byte(patch)
 
-
 	jsonPatch, err := jsonpatch.DecodePatch(patchBytes)
 	if err != nil {
 		klog.Error("DecodePatch error: ", err)

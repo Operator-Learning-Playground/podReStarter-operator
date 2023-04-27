@@ -1,11 +1,11 @@
 package util
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/labels"
+	"context"
 	appv1 "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
-	"context"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/klog/v2"
 )
@@ -68,4 +68,3 @@ func getRsIdsByDeployment(dep *appv1.Deployment, clientSet kubernetes.Interface)
 	}
 	return ret
 }
-

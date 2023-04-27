@@ -7,9 +7,10 @@ import (
 )
 
 const (
-	PodReStarterGroup = "api.practice.com"
+	PodReStarterGroup   = "api.practice.com"
 	PodReStarterVersion = "v1alpha1"
 )
+
 // SchemeGroupVersion is group version used to register these objects
 var SchemeGroupVersion = schema.GroupVersion{Group: PodReStarterGroup, Version: PodReStarterVersion}
 

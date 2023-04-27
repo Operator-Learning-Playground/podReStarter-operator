@@ -18,14 +18,14 @@ type patchOperation struct {
 	Value interface{} `json:"value,omitempty"`
 }
 
-// UpgradePodImage 原地升级pod镜像
-func UpgradePodByImage(pod *v1.Pod, clientSet kubernetes.Interface, images []string) {
+// UpgradePodByImages 原地升级pod镜像
+func UpgradePodByImages(pod *v1.Pod, clientSet kubernetes.Interface, images []string) {
 	klog.Info("pod is upgrading !!")
 	patchList := make([]*patchOperation, 0)
 	for k, image := range images {
 		p := &patchOperation{
-			Op: "replace",
-			Path: fmt.Sprintf("/spec/containers/%v/image", k),
+			Op:    "replace",
+			Path:  fmt.Sprintf("/spec/containers/%v/image", k),
 			Value: image,
 		}
 		patchList = append(patchList, p)

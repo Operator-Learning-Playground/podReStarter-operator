@@ -11,10 +11,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 )
 
-
 type PodReStarterController struct {
 	client.Client
-
 }
 
 func NewPodReStarterController() *PodReStarterController {
@@ -52,7 +50,7 @@ func (r *PodReStarterController) Reconcile(ctx context.Context, req reconcile.Re
 		for i := 0; i < num; i++ {
 			// pod原地升级
 			// image 一定要按照原本的顺序
-			restart.UpgradePodByImage(&podList[i], k8sconfig.ClientSet, imageList)
+			restart.UpgradePodByImages(&podList[i], k8sconfig.ClientSet, imageList)
 
 		}
 	}
@@ -61,10 +59,7 @@ func (r *PodReStarterController) Reconcile(ctx context.Context, req reconcile.Re
 }
 
 // InjectClient 使用controller-runtime 需要注入的client
-func(r *PodReStarterController) InjectClient(c client.Client) error {
+func (r *PodReStarterController) InjectClient(c client.Client) error {
 	r.Client = c
 	return nil
 }
-
-
-
