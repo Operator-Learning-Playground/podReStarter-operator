@@ -17,11 +17,11 @@ type Podrestarter struct {
 }
 
 type PodReStarterSpec struct {
-	Restart             string         `json:"restart"`
-	DeploymentName      string         `json:"deployment_name"`
-	DeploymentNamespace string         `json:"deployment_namespace"`
-	Replicas            int            `json:"replicas"`
-	Images              []Image        `json:"images"`
+	Restart             string  `json:"restart"`
+	DeploymentName      string  `json:"deployment_name"`
+	DeploymentNamespace string  `json:"deployment_namespace"`
+	Replicas            int     `json:"replicas"`
+	Images              []Image `json:"images"`
 }
 
 type Image struct {
