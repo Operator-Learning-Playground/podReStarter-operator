@@ -3,11 +3,11 @@ kind: Podrestarter
 metadata:
   name: mypodrestarter
 spec:
-  restart: "false"
-  deployment_name: my-deployment
-  deployment_namespace: default
-  replicas: 2
-  images:
+  restart: "false"                  # 布尔值：true代表pod原地重启 false代表原地升级
+  deployment_name: my-deployment    # deployment名
+  deployment_namespace: default     # deployment namespace
+  replicas: 2                       # 升级或重启的副本数
+  images:                           # 升级镜像，镜像顺序一定要 "按照顺序"
     - image: nginx:1.18-alpine
     - image: busybox
 

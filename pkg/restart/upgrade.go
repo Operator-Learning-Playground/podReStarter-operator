@@ -20,7 +20,7 @@ type patchOperation struct {
 
 // UpgradePodByImages 原地升级pod镜像
 func UpgradePodByImages(pod *v1.Pod, clientSet kubernetes.Interface, images []string) {
-	klog.Info("pod is upgrading !!")
+	klog.Info("pod is upgrading...")
 	patchList := make([]*patchOperation, 0)
 	for k, image := range images {
 		p := &patchOperation{

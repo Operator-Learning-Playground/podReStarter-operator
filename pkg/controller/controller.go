@@ -25,11 +25,21 @@ func (r *PodReStarterController) Reconcile(ctx context.Context, req reconcile.Re
 	podReStarter := &podrestarterv1alpha1.Podrestarter{}
 	err := r.Get(ctx, req.NamespacedName, podReStarter)
 	if err != nil {
-		return reconcile.Result{}, err
+		if client.IgnoreNotFound(err) != nil {
+			klog.Error("get podReStarter error: ", err)
+			return reconcile.Result{}, err
+		}
+		// 如果未找到的错误，不再进入调协
+		return reconcile.Result{}, nil
 	}
+
 	klog.Info(podReStarter)
 	podList := util.GetPodsByDeployment(podReStarter.Spec.DeploymentName,
 		podReStarter.Spec.DeploymentNamespace, k8sconfig.ClientSet)
+	if len(podList) == 0 {
+		klog.Warning("nothing in podList...")
+		return reconcile.Result{}, nil
+	}
 	// 避免用户填错
 	var num = podReStarter.Spec.Replicas
 	if len(podList) < podReStarter.Spec.Replicas {
@@ -41,7 +51,6 @@ func (r *PodReStarterController) Reconcile(ctx context.Context, req reconcile.Re
 			// pod原地重启
 			restart.RestartPodByImage(&podList[i], k8sconfig.ClientSet)
 		}
-
 	} else {
 		imageList := make([]string, 0)
 		for _, v := range podReStarter.Spec.Images {

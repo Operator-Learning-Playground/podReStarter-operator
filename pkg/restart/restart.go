@@ -16,6 +16,8 @@ import (
 
 // RestartPodByImage 原地重启pod的方式
 func RestartPodByImage(pod *v1.Pod, clientSet kubernetes.Interface) {
+	klog.Info("pod is restarting...")
+
 	restartImage := pod.Spec.Containers[0].Image
 
 	// 改成任意一个镜像
