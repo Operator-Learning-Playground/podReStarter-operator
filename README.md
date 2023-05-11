@@ -26,3 +26,5 @@ spec:
     - image: busybox
 ```
 
+附注：使用patch 原地升级pod有一些限制，需要特别注意，否则会遇到patch error
+参考 [issue](https://github.com/Operator-Learning-Playground/podReStarter-operator/issues/1)

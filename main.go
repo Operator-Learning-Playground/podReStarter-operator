@@ -13,6 +13,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/manager/signals"
+	"time"
 )
 
 /*
@@ -25,9 +26,11 @@ import (
 func main() {
 
 	logf.SetLogger(zap.New())
+	var d time.Duration = 0
 	// 1. 管理器初始化
 	mgr, err := manager.New(k8sconfig.K8sRestConfig(), manager.Options{
 		Logger: logf.Log.WithName("podrestarter-operator"),
+		SyncPeriod: &d, // resync不设置触发
 	})
 	if err != nil {
 		mgr.GetLogger().Error(err, "unable to set up manager")
