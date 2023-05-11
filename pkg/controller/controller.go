@@ -45,7 +45,8 @@ func (r *PodReStarterController) Reconcile(ctx context.Context, req reconcile.Re
 	if len(podList) < podReStarter.Spec.Replicas {
 		num = len(podList)
 	}
-	if podReStarter.Spec.Restart == "true" {
+
+	if podReStarter.Spec.Restart {
 		// 原地重启逻辑
 		for i := 0; i < num; i++ {
 			// pod原地重启

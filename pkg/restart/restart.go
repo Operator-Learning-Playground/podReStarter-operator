@@ -39,8 +39,7 @@ func RestartPodByImage(pod *v1.Pod, clientSet kubernetes.Interface) {
 		return
 	}
 	_, err = clientSet.CoreV1().Pods(pod.Namespace).
-		Patch(context.TODO(), pod.Name, types.JSONPatchType,
-			jsonPatchBytes, metav1.PatchOptions{})
+		Patch(context.TODO(), pod.Name, types.JSONPatchType, jsonPatchBytes, metav1.PatchOptions{})
 	if err != nil {
 		log.Fatalln(err)
 	}

@@ -2,6 +2,7 @@ config
 app.yaml
 
 # Binaries for programs and plugins
+.DS_Store
 *.exe
 *.exe~
 *.dll

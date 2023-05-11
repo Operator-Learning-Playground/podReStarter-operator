@@ -81,7 +81,7 @@ rules:
   - apiGroups:
       - api.practice.com
     resources:
-      - podrestarter
+      - podrestarters
     verbs:
       - create
       - delete
@@ -93,13 +93,13 @@ rules:
   - apiGroups:
       - api.practice.com
     resources:
-      - podrestarter/finalizers
+      - podrestarters/finalizers
     verbs:
       - update
   - apiGroups:
       - api.practice.com
     resources:
-      - podrestarter/status
+      - podrestarters/status
     verbs:
       - get
       - patch

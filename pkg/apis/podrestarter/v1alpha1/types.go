@@ -17,7 +17,7 @@ type Podrestarter struct {
 }
 
 type PodReStarterSpec struct {
-	Restart             string  `json:"restart"`
+	Restart             bool    `json:"restart"`
 	DeploymentName      string  `json:"deployment_name"`
 	DeploymentNamespace string  `json:"deployment_namespace"`
 	Replicas            int     `json:"replicas"`
