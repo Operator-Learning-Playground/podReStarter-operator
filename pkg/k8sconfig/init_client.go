@@ -3,14 +3,14 @@ package k8sconfig
 import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-	"log"
+	"k8s.io/klog/v2"
 )
 
-// InitClient 初始化k8s-client
+// InitClient 初始化 client
 func InitClient(config *rest.Config) kubernetes.Interface {
 	c, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	return c
 }

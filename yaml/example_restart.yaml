@@ -3,9 +3,9 @@ kind: Podrestarter
 metadata:
   name: mypodrestarter
 spec:
-  restart: true                     # 布尔值：true 代表pod原地重启容器 false 代表原地升级镜像
+  type: restart                     #  restart 代表pod原地重启容器 upgrade 代表原地升级镜像
   # 目前仅支持 deployment 操作
-  deployment_name: patch-deployment # deployment名
+  deployment_name: patch-deployment # deployment name
   deployment_namespace: default     # deployment namespace
   replicas: 2                       # 升级或重启的副本数，数量需要小于等于 deployment 副本数
   images:                           # 升级镜像，镜像顺序一定要 "按照顺序"

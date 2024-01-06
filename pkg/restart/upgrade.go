@@ -19,7 +19,7 @@ type patchOperation struct {
 }
 
 // UpgradePodByImages 原地升级pod镜像
-func UpgradePodByImages(pod *v1.Pod, clientSet kubernetes.Interface, images []string) {
+func UpgradePodByImages(ctx context.Context, pod *v1.Pod, clientSet kubernetes.Interface, images []string) error {
 	klog.Info("pod is upgrading...")
 	patchList := make([]*patchOperation, 0)
 	for k, image := range images {
@@ -34,24 +34,26 @@ func UpgradePodByImages(pod *v1.Pod, clientSet kubernetes.Interface, images []st
 	patchBytes, err := json.Marshal(patchList)
 	if err != nil {
 		klog.Error(err)
-		return
+		return err
 	}
 
 	jsonPatch, err := jsonpatch.DecodePatch(patchBytes)
 	if err != nil {
 		klog.Error("DecodePatch error: ", err)
-		return
+		return err
 	}
 	jsonPatchBytes, err := json.Marshal(jsonPatch)
 	if err != nil {
 		klog.Error("json Marshal error: ", err)
-		return
+		return err
 	}
 	_, err = clientSet.CoreV1().Pods(pod.Namespace).
-		Patch(context.TODO(), pod.Name, types.JSONPatchType,
+		Patch(ctx, pod.Name, types.JSONPatchType,
 			jsonPatchBytes, metav1.PatchOptions{})
 	if err != nil {
 		klog.Error("pod patch error: ", err)
-		return
+		return err
 	}
+
+	return nil
 }

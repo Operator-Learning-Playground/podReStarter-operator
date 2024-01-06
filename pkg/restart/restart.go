@@ -10,12 +10,11 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/klog/v2"
-	"log"
 	"time"
 )
 
 // RestartPodByImage 原地重启pod的方式
-func RestartPodByImage(pod *v1.Pod, clientSet kubernetes.Interface) {
+func RestartPodByImage(ctx context.Context, pod *v1.Pod, clientSet kubernetes.Interface) error {
 	klog.Info("pod is restarting...")
 
 	restartImage := pod.Spec.Containers[0].Image
@@ -31,17 +30,18 @@ func RestartPodByImage(pod *v1.Pod, clientSet kubernetes.Interface) {
 	jsonPatch, err := jsonpatch.DecodePatch(patchBytes)
 	if err != nil {
 		klog.Error("DecodePatch error: ", err)
-		return
+		return err
 	}
 	jsonPatchBytes, err := json.Marshal(jsonPatch)
 	if err != nil {
 		klog.Error("json Marshal error: ", err)
-		return
+		return err
 	}
 	_, err = clientSet.CoreV1().Pods(pod.Namespace).
-		Patch(context.TODO(), pod.Name, types.JSONPatchType, jsonPatchBytes, metav1.PatchOptions{})
+		Patch(ctx, pod.Name, types.JSONPatchType, jsonPatchBytes, metav1.PatchOptions{})
 	if err != nil {
-		log.Fatalln(err)
+		klog.Error("patch pods error: ", err)
+		return err
 	}
 
 	// 延迟
@@ -54,17 +54,20 @@ func RestartPodByImage(pod *v1.Pod, clientSet kubernetes.Interface) {
 	restartJsonPatch, err := jsonpatch.DecodePatch(restartPatchBytes)
 	if err != nil {
 		klog.Error("DecodePatch error: ", err)
-		return
+		return err
 	}
 	restartJsonPatchBytes, err := json.Marshal(restartJsonPatch)
 	if err != nil {
 		klog.Error("json Marshal error: ", err)
-		return
+		return err
 	}
 	_, err = clientSet.CoreV1().Pods(pod.Namespace).
-		Patch(context.TODO(), pod.Name, types.JSONPatchType,
+		Patch(ctx, pod.Name, types.JSONPatchType,
 			restartJsonPatchBytes, metav1.PatchOptions{})
 	if err != nil {
-		log.Fatalln(err)
+		klog.Error("patch pods error: ", err)
+		return err
 	}
+
+	return nil
 }

@@ -13,11 +13,12 @@ type Podrestarter struct {
 
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec PodReStarterSpec `json:"spec,omitempty"`
+	Spec   PodReStarterSpec   `json:"spec,omitempty"`
+	Status PodReStarterStatus `json:"status"`
 }
 
 type PodReStarterSpec struct {
-	Restart             bool    `json:"restart"`
+	Type                string  `json:"type"`
 	DeploymentName      string  `json:"deployment_name"`
 	DeploymentNamespace string  `json:"deployment_namespace"`
 	Replicas            int     `json:"replicas"`
@@ -25,6 +26,15 @@ type PodReStarterSpec struct {
 }
 
 type Image struct {
+	Image string `json:"image"`
+}
+
+type PodReStarterStatus struct {
+	// Type 类型 restart upgrade 两种
+	Type string `json:"type"`
+	// Status 进行状态
+	Status string `json:"status"`
+	// Image 镜像
 	Image string `json:"image"`
 }
 

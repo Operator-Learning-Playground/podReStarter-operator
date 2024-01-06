@@ -29,7 +29,7 @@ func main() {
 	var d time.Duration = 0
 	// 1. 管理器初始化
 	mgr, err := manager.New(k8sconfig.K8sRestConfig(), manager.Options{
-		Logger: logf.Log.WithName("podrestarter-operator"),
+		Logger:     logf.Log.WithName("podrestarter-operator"),
 		SyncPeriod: &d, // resync不设置触发
 	})
 	if err != nil {
@@ -45,7 +45,7 @@ func main() {
 	}
 
 	// 3. 控制器相关
-	podReStarterCtl := controller.NewPodReStarterController()
+	podReStarterCtl := controller.NewPodReStarterController(mgr.GetClient(), mgr.GetEventRecorderFor("pod restarter operator"))
 
 	err = builder.ControllerManagedBy(mgr).
 		For(&podrestarterv1alpha1.Podrestarter{}).
